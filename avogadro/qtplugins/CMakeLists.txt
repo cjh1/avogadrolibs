@@ -23,13 +23,19 @@ option(BUILD_STATIC_PLUGINS "Build static plugins by default" ON)
 # uis is the list of UI files that need to be compiled (optional).
 # rcs is the list of qrc files that need to be compiled (optional).
 function(avogadro_plugin name description type header pluginClass sources)
+  message("sources: ${sources}")
+
   set(uis "")
   set(rcs "")
+  set(objt "")
   if(${ARGC} GREATER 6)
     set(uis ${ARGV6})
   endif()
   if(${ARGC} GREATER 7)
     set(rcs ${ARGV7})
+  endif()
+  if(${ARGC} GREATER 8)
+    set(objt ${ARGV8})
   endif()
   qt4_wrap_ui(ui_srcs ${uis})
   qt4_add_resources(rc_srcs ${rcs})
@@ -65,6 +71,7 @@ function(avogadro_plugin name description type header pluginClass sources)
     ${ui_srcs}
     ${rc_srcs}
     ${name}Plugin.cpp
+    ${objt}
   )
   target_link_libraries(${name} AvogadroCore AvogadroQtGui)
 
@@ -105,6 +112,7 @@ add_subdirectory(ballandstick)
 add_subdirectory(vanderwaals)
 add_subdirectory(meshes)
 add_subdirectory(vanderwaalsao)
+add_subdirectory(clientserver)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${original_library_output_dir}")
 
