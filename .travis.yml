@@ -1,6 +1,6 @@
 branches:
   only:
-    - master
+    - wheels
 
 language: cpp
 
@@ -21,7 +21,7 @@ matrix:
           - llvm-toolchain-trusty-6.0
           packages:
           - clang-format-6.0
-
+      if: branch = master
     - compiler: gcc
       addons:
         apt:
@@ -30,7 +30,7 @@ matrix:
       env:
         - TASKS="ctest gcc-4.9"
         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
-
+      if: branch = master
     - compiler: gcc
       addons:
         apt:
@@ -39,12 +39,27 @@ matrix:
       env:
         - TASKS="ctest gcc-6.3"
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-
+      if: branch = master
     - compiler: clang
       env: TASKS="ctest clang-3.9"
+      if: branch = master
+    - compiler: gcc
+      env:
+        - DEPLOY=TRUE
+  
+install: true
+#  - . ./scripts/travis/install.sh
 
-install:
-  - . ./scripts/travis/install.sh
+script: true
+#  - ./scripts/travis/build.sh
 
-script:
-  - ./scripts/travis/build.sh
+before_deploy:
+  - ./scripts/travis/deploy.sh 
+
+deploy:
+  provider: script
+  script: bash ./scripts/travis/deploy.sh
+  on:
+    branch: wheels
+    condition: $DEPLOY=TRUE
+ 
