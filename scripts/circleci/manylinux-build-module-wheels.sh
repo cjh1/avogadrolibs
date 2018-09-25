@@ -68,13 +68,19 @@ for PYBIN in "${PYBINARIES[@]}"; do
     echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
     echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
     echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
+    rm -rf /deps/pybind11
+    mkdir -p /deps/pybind11/build
+    mkdir -p /deps/pybind11/install
+    cd /deps/pybind11/build
+    cmake -DPYTHON_EXECUTABLE:PATH=$PYTHON_EXECUTABLE -DPYBIND11_TEST:BOOL=FALSE -DCMAKE_INSTALL_PREFIX:PATH=/deps/pybind11/install ../../pybind11-2.2.4
+    cmake --build . --target install
+    cd /work
 
     if [[ -e /work/requirements-dev.txt ]]; then
       ${PYBIN}/pip install --upgrade -r /work/requirements-dev.txt
     fi
-    cd /work
     ${PYBIN}/python setup.py bdist_wheel --build-type MinSizeRel -G Ninja -- \
-      -Dpybind11_DIR:PATH=/deps/pybind11/share/cmake/pybind11 \
+      -Dpybind11_DIR:PATH=/deps/pybind11/install/share/cmake/pybind11 \
       -DEIGEN3_INCLUDE_DIR:PATH=/deps/eigen/include/eigen3 \
       -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
       -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR} \
