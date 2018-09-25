@@ -65,15 +65,13 @@ script: true
 #  - ./scripts/travis/build.sh
 
 before_deploy:
-  - ./scripts/travis/deploy.sh
+  - ./scripts/travis/macpython-build-wheels.sh 3.5
 
+# Currently we have todo the pypi upload in a script, as Travis's support is
+# broken  :-(
 deploy:
-  provider: pypi
-  server: https://test.pypi.org/legacy/
-  username: openchemistry
-  password:
-    secure: a2lzXcO8JZvUMTtZ8avD4uJc6CeNavzkg6yTHeIdN+A/GhIdaPezqgtu6ZZTdy7eyLJBm4/crjvtI3RhX3ew0tmXJzHLepdknu2i94dRJqHJxAARdkU/h61p707HZOudSMikl8g1V3FjVgHOhKd0dym3Lw+ZxuydoTJEOmjM55kcUJuyncx/s/XnSPwcaih9fP7mrYewtcMXkYs1qzEBpdRJ2PiXbUA3kq9lJC624tsR7zz0/afOZt2wDKFhS4D2ijHuwo0YrxEPBNNhVz3FehEDfB1tx3H+nvUHAjEBCtix/wpLu5uEx3v1bf1m65mihcTPS8jF+brn1DiknjrrLauSYD8BjyKZKYrbJw5vFLWjCOlg4k/tS7bbIWdyHSUaU2wyrjulveW8rWBpicrsTZksUWTawZkRFldb70UZDAWbNgcT5P+wXimFYv1BQaVV+EM8SyZ8Do4s2PvH/lck64BRK3cBwhdEvSfloMAbk9NRqlb8L1xGPoLt7bvhj7eyZkVmT+ma0tYTuoMz3xxLSqqDNgjyCmqgBtQ4XFlg3kSA5K9lwxAE3fdymUvXol8ahxSK/Aglv1amZO3GIsDNS78xEtH69Pr5GN0WAClfJ8AS7TeTG5maSpCkk3ZfTG8qO1bbvQzr6i1kBttyajJODU+YgmD494SedNaZ9JeCqZs=
-  distributions: "bdist_wheel"
+  provider: script
+  script: ./scripts/travis/deploy.sh
   skip_cleanup: true
   on:
     branch: wheels
