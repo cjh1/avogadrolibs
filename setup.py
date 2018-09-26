@@ -6,9 +6,6 @@ setup(
     description="",
     author='Kitware',
     license="BSD",
-    #package_dirs={
-    #    'avogadro': 'python/avogadro'
-    #},
     packages=['avogadro'],
     cmake_args=[
         '-DUSE_SPGLIB:BOOL=FALSE',
