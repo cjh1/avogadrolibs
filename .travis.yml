@@ -65,7 +65,7 @@ script: true
 #  - ./scripts/travis/build.sh
 
 before_deploy:
-  - ./scripts/travis/macpython-build-wheels.sh 3.5
+  - ./scripts/travis/macpython-build-wheels.sh 3.5 3.6 3.7
 
 # Currently we have todo the pypi upload in a script, as Travis's support is
 # broken  :-(
