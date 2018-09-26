@@ -89,9 +89,10 @@ for PYBIN in "${PYBINARIES[@]}"; do
     ${PYBIN}/python setup.py clean
 done
 
-# Since there are no external shared libraries to bundle into the wheels
-# this step will fixup the wheel switching from 'linux' to 'manylinux1' tag
-#for whl in dist/*linux_$(uname -p).whl; do
-#    auditwheel repair ${whl} -w /work/dist/
-#    rm ${whl}
-#done
+# Update wheel to switching from 'linux' to 'manylinux1' tag
+# We need to install click
+/opt/_internal/cpython-3.6.6/bin/pip install click
+for whl in dist/*linux_$(uname -p).whl; do
+    /opt/_internal/cpython-3.6.6/bin/python /work/scripts/tag_manylinux.py ${whl}
+    rm ${whl}
+done
