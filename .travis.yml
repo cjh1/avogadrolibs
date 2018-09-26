@@ -71,7 +71,7 @@ before_deploy:
 # broken  :-(
 deploy:
   provider: script
-  script: ./scripts/travis/deploy.sh
+  script: ./scripts/travis/upload_pypi.sh
   skip_cleanup: true
   on:
     branch: wheels

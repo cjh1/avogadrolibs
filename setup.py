@@ -2,7 +2,7 @@ from skbuild import setup
 
 setup(
     name="avogadrolibs",
-    version="0.0.2",
+    version="0.0.5",
     description="",
     author='Kitware',
     license="BSD",

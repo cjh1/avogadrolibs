@@ -14,6 +14,10 @@ jobs:
       - store_artifacts:
           path: dist
           destination: dist
+      - run:
+         name: Upload to PyPi
+         command: |
+           ./avogadrolibs/scripts/circleci/upload_pypi.sh
 
 workflows:
     version: 2
