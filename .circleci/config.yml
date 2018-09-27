@@ -26,4 +26,4 @@ workflows:
         - package
             filters:
               tags:
-                only: /^\d+\.\d+\.\d+$*/
+                only: /^.*/
