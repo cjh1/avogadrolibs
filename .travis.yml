@@ -1,6 +1,7 @@
 branches:
   only:
     - master
+    - /^\d+\.\d+\.\d+$/
 
 language: cpp
 
