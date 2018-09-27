@@ -21,9 +21,9 @@ jobs:
 
 workflows:
     version: 2
-    package:
+    package_wheel:
       jobs:
         - package
             filters:
               tags:
-                only: /^\d+\.\d+\.\d+$*/
+                only: /.*/
