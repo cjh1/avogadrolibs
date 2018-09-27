@@ -13,48 +13,53 @@
       QTDIR: C:\Qt\5.6\msvc2015_64
       platform: x64
   build_script:
-  - cmd: >-
-      cd ..
+  - ps: >-
+      if ($env:appveyor_repo_tag -eq 'False')
+      {
+        cd ..
 
-      git init .
+        git init .
 
-      git remote add origin git://github.com/OpenChemistry/openchemistry.git
+        git remote add origin git://github.com/OpenChemistry/openchemistry.git
 
-      git pull origin master
+        git pull origin master
 
-      git -c submodule.avogadrolibs.update=none submodule update --init
+        git -c submodule.avogadrolibs.update=none submodule update --init
 
-      cd ../
+        cd ../
 
-      mkdir openchemistry-build
+        mkdir openchemistry-build
 
-      cd openchemistry-build
+        cd openchemistry-build
 
-      cmake -G %CMAKE_GENERATOR% ../openchemistry
+        cmake -G $env:CMAKE_GENERATOR ../openchemistry
 
-      cmake --build . --target avogadrolibs --config Release -- /verbosity:detailed
+        cmake --build . --target avogadrolibs --config Release -- /verbosity:detailed
+      }
+# Python wheel build
 -
-  branches:
-    only:
-      - wheels
-  version: "0.0.1.{build}"
+  version: "1.0.{build}"
   environment:
     TWINE_USERNAME:
       secure: SzeZ03l7jd21TtgkMyds7g==
     TWINE_PASSWORD:
       secure: S5cwk5CAZ1pxBBIiBqQhR0zYIkvuktHcjVZ+jocTL08=
   install:
-    - pip install twine
-    - cd c:\projects\avogadrolibs
-    - ps: .\scripts\appveyor\build-wheels.ps1
+    - ps: >-
+        if ($env:appveyor_repo_tag -eq 'True')
+        {
+          cd c:\projects\avogadrolibs
+          .\scripts\appveyor\build-wheels.ps1
+        }
 
   build: off
 
   test: off
 
-  artifacts:
-    # pushing entire folder as a zip archive
-    - path: dist\*
-
   deploy_script:
-    - twine upload --repository-url  https://test.pypi.org/legacy/ dist/*
+    - ps: >-
+        if ($env:appveyor_repo_tag -eq 'True')
+        {
+          cd c:\projects\avogadrolibs
+          .\scripts\appveyor\upload-pypi.ps1
+        }
