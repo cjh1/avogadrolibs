@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Don't build on tag
-if [ -n "$TRAVIS_TAG" ]; then exit 0; fi
+if [ -z "$TRAVIS_TAG" ]; then exit 0; fi
 
 if [[ $TASKS != "clang-format" ]]; then
   eval "${MATRIX_EVAL}"
