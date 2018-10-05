@@ -1,8 +1,10 @@
 #!/bin/bash
 
+echo $TRAVIS_TAG
+echo $TRAVIS_BRANCH
+
 # Don't build on tag
 if [ ! -z "$TRAVIS_TAG" ]; then exit 0; fi
-
 if [[ $TASKS != "clang-format" && $TRAVIS_OS_NAME == "linux" ]]; then
   eval "${MATRIX_EVAL}"
   sudo add-apt-repository ppa:beineri/opt-qt542-trusty -y
@@ -18,7 +20,7 @@ if [[ $TASKS != "clang-format" && $TRAVIS_OS_NAME == "linux" ]]; then
   CMAKE_NAME="cmake-3.10.0-Linux-x86_64"
   wget https://cmake.org/files/v3.10/${CMAKE_NAME}.tar.gz
   tar -xzf ${CMAKE_NAME}.tar.gz
-  export CMAKE_EXE=${PWD}/${CMAKE_NAME}/bin/cmake
+  mv ${CMAKE_NAME} cmake
   cd avogadrolibs
 elif [[ $TASKS != "clang-format" && $TRAVIS_OS_NAME == "osx" ]]; then
   brew install qt eigen glew open-babel
