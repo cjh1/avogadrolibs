@@ -1,4 +1,5 @@
 trap { Write-Error $_; Exit 1 }
 
+pip install --upgrade pip
 pip install twine
-twine upload dist/*
+twine upload --repository-url  https://test.pypi.org/legacy/ dist/*
