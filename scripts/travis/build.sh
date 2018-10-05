@@ -22,7 +22,7 @@ else
   cd build
 
   if [[ $TRAVIS_OS_NAME == "linux" ]]; then
-  ${CMAKE_EXE} -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  ${TRAVIS_BUILD_DIR}/../../cmake/bin/cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DENABLE_TESTING=ON \
     -DUSE_SYSTEM_EIGEN=ON \
     -DUSE_SYSTEM_GLEW=ON \

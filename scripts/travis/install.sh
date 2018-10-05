@@ -18,7 +18,8 @@ if [[ $TASKS != "clang-format" && $TRAVIS_OS_NAME == "linux" ]]; then
   CMAKE_NAME="cmake-3.10.0-Linux-x86_64"
   wget https://cmake.org/files/v3.10/${CMAKE_NAME}.tar.gz
   tar -xzf ${CMAKE_NAME}.tar.gz
-  export CMAKE_EXE=${PWD}/${CMAKE_NAME}/bin/cmake
+  pwd
+  echo $TRAVIS_BUILD_DIR
   cd avogadrolibs
 elif [[ $TASKS != "clang-format" && $TRAVIS_OS_NAME == "osx" ]]; then
   brew install qt eigen glew open-babel
