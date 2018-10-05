@@ -1,8 +1,10 @@
 #!/bin/bash
 
+echo $TRAVIS_TAG
+echo $TRAVIS_BRANCH
+
 # Don't build on tag
 if [ ! -z "$TRAVIS_TAG" ]; then exit 0; fi
-
 if [[ $TASKS != "clang-format" && $TRAVIS_OS_NAME == "linux" ]]; then
   eval "${MATRIX_EVAL}"
   sudo add-apt-repository ppa:beineri/opt-qt542-trusty -y
