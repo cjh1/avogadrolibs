@@ -1,6 +1,7 @@
 branches:
   only:
     - master
+    - circleit
     - /^\d+\.\d+\.\d+$/
 
 language: cpp
@@ -26,7 +27,7 @@ matrix:
           - llvm-toolchain-trusty-6.0
           packages:
           - clang-format-6.0
-      if: branch = master AND tag IS blank
+      if: branch = circleit AND tag IS blank
 
     - compiler: gcc
       os: linux
@@ -37,7 +38,7 @@ matrix:
       env:
         - TASKS="ctest gcc-4.9"
         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
-      if: branch = master AND tag IS blank
+      if: branch = circleit AND tag IS blank
 
     - compiler: gcc
       os: linux
@@ -48,23 +49,23 @@ matrix:
       env:
         - TASKS="ctest gcc-6.3"
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-      if: branch = master AND tag IS blank
+      if: branch = circleit AND tag IS blank
 
     - compiler: clang
       os: linux
       env: TASKS="ctest clang-3.9"
-      if: branch = master AND tag IS blank
+      if: branch = circleit AND tag IS blank
 
     - os: osx
       env: TASKS="Mac clang"
-      if: branch = master AND tag IS blank
+      if: branch = circleit AND tag IS blank
 
     - os: osx
       env: DEPLOY=TRUE
       if: tag IS present
 
 install:
-  - . ./scripts/travis/install.sh
+  - ./scripts/travis/install.sh
 
 script:
   - ./scripts/travis/build.sh
